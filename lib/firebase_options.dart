@@ -67,6 +67,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '822716013306',
     projectId: 'antamit-e2b26',
     storageBucket: 'antamit-e2b26.appspot.com',
+    androidClientId: '822716013306-1k6i51r5aj762u13rl1ckne65osgo6tr.apps.googleusercontent.com',
     iosClientId: '822716013306-nshhcs210oendlb6n6b3jgfn7prcnsqv.apps.googleusercontent.com',
     iosBundleId: 'com.example.ant',
   );
@@ -77,6 +78,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '822716013306',
     projectId: 'antamit-e2b26',
     storageBucket: 'antamit-e2b26.appspot.com',
+    androidClientId: '822716013306-1k6i51r5aj762u13rl1ckne65osgo6tr.apps.googleusercontent.com',
     iosClientId: '822716013306-k6ui08dv3gf6dhkek734uc3s4tc8h5u5.apps.googleusercontent.com',
     iosBundleId: 'com.example.ant.RunnerTests',
   );
