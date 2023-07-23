@@ -14,22 +14,22 @@ class HomeScreen extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.all(16),
+              child: Text(
+                'Home',
+                style: AppTheme.smallButtonTextStyle
+                    .copyWith(fontWeight: FontWeight.bold),
               ),
-              child: const Text('Home',
-                  style: TextStyle(
-                    fontFamily: AppTheme.buttonTextFamily,
-                    fontSize: AppTheme.buttonFontSizeLarge,
-                    fontWeight: AppTheme.buttonFontWeight,
-                  )),
             ),
             FilledButton(
               onPressed: () {},
-              child: Text('Home'),
+              child: Text(
+                'Home',
+                style: AppTheme.smallButtonTextStyle
+                    .copyWith(fontWeight: FontWeight.bold),
+              ),
             ),
-            FilledButton.tonal(onPressed: () {}, child: Text('Home')),
-            OutlinedButton(onPressed: () {}, child: Text('Home')),
+            FilledButton.tonal(onPressed: () {}, child: const Text('Home')),
+            OutlinedButton(onPressed: () {}, child: const Text('Home')),
           ],
         ),
       ),
