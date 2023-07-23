@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
             ),
             Card(
               elevation: 0,
-              color: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.primary,
               surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
               child: const SizedBox(
                 height: 50,

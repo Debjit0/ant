@@ -1,5 +1,4 @@
 import 'package:ant/Login%20Screen/login_Screen.dart';
-import 'package:ant/Login%20Screen/login_screen_new.dart';
 import 'package:ant/screens/home_screen/home_screen.dart';
 import 'package:ant/theme/constants/project_colors.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,12 +17,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: cRed),
         useMaterial3: true,
       ),
-      home: LoginScreenNew(),
+      home: LoginScreen(),
     );
   }
 }
