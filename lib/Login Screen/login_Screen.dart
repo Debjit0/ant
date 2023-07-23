@@ -1,5 +1,3 @@
-
-
 import 'package:ant/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -23,33 +21,43 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset("assets/images/loginR1.png"),
-              SizedBox(
-                width: MediaQuery.of(context).size.width*0.9,
-                height: 60,
-                child: Row(
-                  children: [
-                    ElevatedButton(onPressed: (){}, child: Text("+91")),
-                    SizedBox(
-                      width: 200,
-                      height: 60,
-                      child: TextFormField(
-                        
-                        decoration: textInputDecoration.copyWith(
-                          labelText: "Phone Number",
-                          prefixIcon: Icon(
-                            Icons.phone,
-                            color: Theme.of(context).primaryColor,
+              Form(
+                child: SizedBox(
+                  height: 60,
+                  width: MediaQuery.of(context).size.width - 40,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      SizedBox(
+                          height: 60,
+                          width: 90,
+                          child: ElevatedButton(
+                              style: FilledButton.styleFrom(
+                                  //backgroundColor: Colors.black87,
+                                  foregroundColor: Colors.black87),
+                              onPressed: () {},
+                              child: const Text("+91"))),
+                      SizedBox(
+                        height: 60,
+                        width:
+                            (MediaQuery.of(context).size.width - 40) - 90 - 16,
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(100),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Container(
+              SizedBox(
                   width: double.infinity,
                   height: 60,
                   child: FilledButton.tonal(
