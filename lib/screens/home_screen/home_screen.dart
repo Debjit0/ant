@@ -9,28 +9,43 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            ElevatedButton(
-              onPressed: () {},
-              child: Text(
-                'Home',
-                style: AppTheme.smallButtonTextStyle
-                    .copyWith(fontWeight: FontWeight.bold),
+            Card(
+              elevation: 4,
+              surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
+              child: const SizedBox(
+                height: 50,
+                width: 50,
               ),
             ),
-            FilledButton(
-              onPressed: () {},
-              child: Text(
-                'Home',
-                style: AppTheme.smallButtonTextStyle
-                    .copyWith(fontWeight: FontWeight.bold),
+            Card(
+              elevation: 4,
+              surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
+              child: const SizedBox(
+                height: 50,
+                width: 50,
               ),
             ),
-            FilledButton.tonal(onPressed: () {}, child: const Text('Home')),
-            OutlinedButton(onPressed: () {}, child: const Text('Home')),
+            Card(
+              elevation: 0,
+              color: Theme.of(context).colorScheme.background,
+              surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
+              child: const SizedBox(
+                height: 50,
+                width: 50,
+              ),
+            ),
+            Card(
+              elevation: 4,
+              surfaceTintColor: Theme.of(context).colorScheme.surfaceTint,
+              child: const SizedBox(
+                height: 50,
+                width: 50,
+              ),
+            ),
           ],
         ),
       ),
