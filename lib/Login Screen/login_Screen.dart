@@ -27,31 +27,30 @@ class _LoginScreenState extends State<LoginScreen> {
               width: width,
             ),
             SizedBox(
-              height: height,
+              height: height * .7,
               width: width,
               child: Image.asset(
                 'assets/images/background.jpg',
-                fit: BoxFit.fitHeight,
+                fit: BoxFit.fitWidth,
               ),
             ),
             Container(
-              height: height,
+              height: height * .7,
               width: width,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [
-                    Colors.black26,
-                    Colors.black54,
-                    Colors.black87,
-                  ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  stops: [0, 0.3, 1],
-                ),
+                    colors: [
+                      Colors.black38,
+                      Colors.black87.withOpacity(1),
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    stops: const [0, 1],
+                    tileMode: TileMode.clamp),
               ),
             ),
             Positioned(
-              bottom: height * .05,
+              bottom: 10,
               child: Container(
                 height: 300,
                 width: width,
