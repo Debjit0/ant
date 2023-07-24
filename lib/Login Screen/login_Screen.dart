@@ -1,16 +1,23 @@
 import 'package:ant/theme/app_theme.dart';
+import 'package:ant/view_models/auth_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../otp/verify.dart';
 import '../widget/widgets.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
-
+  static String verify = '';
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  String countryCode = '+91';
+  TextEditingController phoneController = TextEditingController();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -27,41 +34,71 @@ class _LoginScreenState extends State<LoginScreen> {
               width: width,
             ),
             SizedBox(
-              height: height,
+              height: height * .7,
               width: width,
               child: Image.asset(
                 'assets/images/background.jpg',
-                fit: BoxFit.fitHeight,
+                fit: BoxFit.fitWidth,
               ),
             ),
             Container(
-              height: height,
+              height: height * .7,
               width: width,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [
-                    Colors.black26,
-                    Colors.black54,
-                    Colors.black87,
-                  ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  stops: [.05, .5, 1],
-                ),
+                    colors: [
+                      Colors.black38,
+                      Colors.black87.withOpacity(1),
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    stops: const [0, 1],
+                    tileMode: TileMode.clamp),
               ),
             ),
             Positioned(
-              bottom: height * .05,
+              bottom: height * .1,
               child: Container(
-                height: 300,
+                //  height: 300,
                 width: width,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text.rich(
+                      textAlign: TextAlign.center,
+                      TextSpan(
+                        text: 'Welcome back, '.toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.w400,
+                          letterSpacing: 2,
+                          color:
+                              Theme.of(context).colorScheme.secondaryContainer,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: 'Debjit'.toUpperCase(),
+                            style: TextStyle(
+                              fontSize: 32,
+                              letterSpacing: 2,
+                              fontWeight: FontWeight.w900,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .secondaryContainer,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
                     // Image.asset("assets/images/login.png"),
                     Form(
+                      key: _formKey,
                       child: SizedBox(
                         // height: 60,
                         width: MediaQuery.of(context).size.width - 40,
@@ -81,6 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   90 -
                                   16,
                               child: TextFormField(
+                                controller: phoneController,
                                 style: const TextStyle(
                                   color: Colors.white,
                                 ),
@@ -97,6 +135,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 keyboardType: TextInputType.number,
                                 textAlign: TextAlign.center,
                                 decoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 16, horizontal: 16),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(100),
                                     borderSide: BorderSide(),
@@ -126,7 +166,45 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: double.infinity,
                         height: 50,
                         child: FilledButton.tonal(
-                            onPressed: () {}, child: const Text("Get OTP")))
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                print("${countryCode + phoneController.text}");
+                                try {
+                                  Provider.of<AuthProvider>(context,
+                                              listen: false)
+                                          .setPhoneNumber =
+                                      "${countryCode + phoneController.text}";
+                                  await FirebaseAuth.instance.verifyPhoneNumber(
+                                    phoneNumber:
+                                        "${countryCode + phoneController.text}",
+                                    verificationCompleted:
+                                        (PhoneAuthCredential credential) {},
+                                    verificationFailed:
+                                        (FirebaseAuthException e) {},
+                                    codeSent: (String verificationId,
+                                        int? resendToken) {
+                                      LoginScreen.verify = verificationId;
+                                      nextPage(
+                                          context: context, page: MyVerify());
+                                    },
+                                    codeAutoRetrievalTimeout:
+                                        (String verificationId) {},
+                                  );
+                                } catch (e) {
+                                  print(e);
+                                  ScaffoldMessenger.of(context)
+                                      .hideCurrentSnackBar();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Center(
+                                        child: Text(e.toString()),
+                                      ),
+                                    ),
+                                  );
+                                }
+                              }
+                            },
+                            child: const Text("Get OTP")))
                   ],
                 ),
               ),

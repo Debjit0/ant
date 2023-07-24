@@ -1,8 +1,13 @@
 import 'package:ant/Login%20Screen/login_Screen.dart';
+import 'package:ant/Login%20Screen/phone.dart';
 import 'package:ant/screens/home_screen/home_screen.dart';
+import 'package:ant/signup_screen/aadhar.dart';
+import 'package:ant/signup_screen/signup_screen.dart';
 import 'package:ant/theme/constants/project_colors.dart';
+import 'package:ant/view_models/auth_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,14 +21,22 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: cYellow),
-        useMaterial3: true,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (ctx) => AuthProvider(),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          scaffoldBackgroundColor: Colors.black87,
+          colorScheme: ColorScheme.fromSeed(seedColor: cYellow),
+          useMaterial3: true,
+        ),
+        home: Aadhar(),
       ),
-      home: LoginScreen(),
     );
   }
 }
