@@ -1,4 +1,5 @@
 import 'package:ant/Login%20Screen/login_Screen.dart';
+import 'package:ant/Login%20Screen/phone.dart';
 import 'package:ant/screens/home_screen/home_screen.dart';
 import 'package:ant/theme/constants/project_colors.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: cYellow),
         useMaterial3: true,
       ),
-      home: LoginScreen(),
+      home: MyPhone(),
     );
   }
 }
