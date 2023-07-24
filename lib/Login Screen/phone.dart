@@ -12,7 +12,7 @@ class MyPhone extends StatefulWidget {
 
 class _MyPhoneState extends State<MyPhone> {
   TextEditingController countryController = TextEditingController();
-  String phone="";
+  String phone = "";
 
   @override
   void initState() {
@@ -24,6 +24,7 @@ class _MyPhoneState extends State<MyPhone> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Container(
         margin: EdgeInsets.only(left: 25, right: 25),
         alignment: Alignment.center,
@@ -56,73 +57,77 @@ class _MyPhoneState extends State<MyPhone> {
               SizedBox(
                 height: 30,
               ),
-              Container(
-                height: 55,
-                decoration: BoxDecoration(
-                    border: Border.all(width: 1, color: Colors.grey),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 10,
-                    ),
-                    SizedBox(
-                      width: 40,
-                      child: TextField(
-                        controller: countryController,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
+              Column(
+                children: [
+                  Container(
+                    height: 55,
+                    decoration: BoxDecoration(
+                        border: Border.all(width: 1, color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 10,
                         ),
-                      ),
-                    ),
-                    Text(
-                      "|",
-                      style: TextStyle(fontSize: 33, color: Colors.grey),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                        child: TextField(
+                        SizedBox(
+                          width: 40,
+                          child: TextField(
+                            controller: countryController,
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          "|",
+                          style: TextStyle(fontSize: 33, color: Colors.grey),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                            child: TextField(
                           onChanged: (value) {
                             phone = value;
                           },
-                      keyboardType: TextInputType.phone,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Phone",
-                      ),
-                    ))
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                width: double.infinity,
-                height: 45,
-                child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10))),
-                    onPressed: () async {
-                      await FirebaseAuth.instance.verifyPhoneNumber(
-                        phoneNumber: "${countryController.text+phone}",
-                        verificationCompleted:
-                            (PhoneAuthCredential credential) {},
-                        verificationFailed: (FirebaseAuthException e) {},
-                        codeSent: (String verificationId, int? resendToken) {
-                          MyPhone.verify=verificationId;
-                          nextPage(context: context, page: MyVerify());
+                          keyboardType: TextInputType.phone,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Phone",
+                          ),
+                        ))
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 45,
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10))),
+                        onPressed: () async {
+                          await FirebaseAuth.instance.verifyPhoneNumber(
+                            phoneNumber: "${countryController.text + phone}",
+                            verificationCompleted:
+                                (PhoneAuthCredential credential) {},
+                            verificationFailed: (FirebaseAuthException e) {},
+                            codeSent: (String verificationId, int? resendToken) {
+                              MyPhone.verify = verificationId;
+                              nextPage(context: context, page: MyVerify());
+                            },
+                            codeAutoRetrievalTimeout: (String verificationId) {},
+                          );
+                          //Navigator.pushNamed(context, 'verify');
                         },
-                        codeAutoRetrievalTimeout: (String verificationId) {},
-                      );
-                      //Navigator.pushNamed(context, 'verify');
-                    },
-                    child: Text("Send the code")),
+                        child: Text("Send the code")),
+                  ),
+                ],
               )
             ],
           ),

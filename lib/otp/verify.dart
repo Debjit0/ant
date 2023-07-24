@@ -1,3 +1,4 @@
+import 'package:ant/Login%20Screen/login_Screen.dart';
 import 'package:ant/Login%20Screen/phone.dart';
 import 'package:ant/screens/home_screen/home_screen.dart';
 import 'package:ant/widget/widgets.dart';
@@ -40,107 +41,126 @@ class _MyVerifyState extends State<MyVerify> {
         color: Color.fromRGBO(234, 239, 243, 1),
       ),
     );
-
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back_ios_rounded,
-            color: Colors.black,
+      body: Stack(
+        children: [
+          SizedBox(
+            height: height,
+            width: width,
           ),
-        ),
-        elevation: 0,
-      ),
-      body: Container(
-        margin: EdgeInsets.only(left: 25, right: 25),
-        alignment: Alignment.center,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              /*Image.asset(
-                'assets/image/loginR.png',
-                width: 150,
-                height: 150,
-              ),*/
-              SizedBox(
-                height: 25,
-              ),
-              Text(
-                "Phone Verification",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "We need to register your phone without getting started!",
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Pinput(
-                length: 6,
-                // defaultPinTheme: defaultPinTheme,
-                // focusedPinTheme: focusedPinTheme,
-                // submittedPinTheme: submittedPinTheme,
-                onChanged: (value) {
-                  code = value;
-                },
-                showCursor: true,
-                onCompleted: (pin) => print(pin),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                width: double.infinity,
-                height: 45,
-                child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10))),
-                    onPressed: () async {
-                      try{
-                        PhoneAuthCredential credential =
-                          PhoneAuthProvider.credential(
-                              verificationId: MyPhone.verify, smsCode: code);
-
-                      // Sign the user in (or link) with the credential
-                      await auth.signInWithCredential(credential);
-                      nextPageOnly(context: context, page: HomeScreen());
-                      }
-                      catch(e){
-
-                      }
-                      
-                    },
-                    child: Text("Verify Phone Number")),
-              ),
-              Row(
-                children: [
-                  TextButton(
-                      onPressed: () {
-                        
+          SizedBox(
+            height: height * .7,
+            width: width,
+            child: Image.asset(
+              'assets/images/background.jpg',
+              fit: BoxFit.fitWidth,
+            ),
+          ),
+          Container(
+            height: height * .7,
+            width: width,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  colors: [
+                    Colors.black38,
+                    Colors.black87.withOpacity(1),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  stops: const [0, 1],
+                  tileMode: TileMode.clamp),
+            ),
+          ),
+          Positioned(
+            bottom: height * .1,
+            child: Container(
+              // height: 300,
+              width: width,
+              padding: const EdgeInsets.only(left: 16, right: 16),
+              alignment: Alignment.center,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    /*Image.asset(
+                      'assets/image/loginR.png',
+                      width: 150,
+                      height: 150,
+                    ),*/
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    Text(
+                      "Phone Verification",
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.secondaryContainer,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Pinput(
+                      length: 6,
+                      // defaultPinTheme: defaultPinTheme,
+                      // focusedPinTheme: focusedPinTheme,
+                      // submittedPinTheme: submittedPinTheme,
+                      onChanged: (value) {
+                        code = value;
                       },
-                      child: Text(
-                        "Edit Phone Number ?",
-                        style: TextStyle(color: Colors.black),
-                      ))
-                ],
-              )
-            ],
+                      showCursor: true,
+                      onCompleted: (pin) => print(pin),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 44,
+                      child: FilledButton.tonal(
+                          // style: ElevatedButton.styleFrom(
+                          //     shape: RoundedRectangleBorder(
+                          //         borderRadius: BorderRadius.circular(10))),
+                          onPressed: () async {
+                            try {
+                              PhoneAuthCredential credential =
+                                  PhoneAuthProvider.credential(
+                                      verificationId: MyPhone.verify,
+                                      smsCode: code);
+
+                              // Sign the user in (or link) with the credential
+                              await auth.signInWithCredential(credential);
+                              nextPageOnly(
+                                  context: context, page: HomeScreen());
+                            } catch (e) {}
+                          },
+                          child: const Text("Verify Phone Number")),
+                    ),
+                    Row(
+                      children: [
+                        TextButton(
+                            onPressed: () {
+                              nextPageOnly(
+                                context: context,
+                                page: const LoginScreen(),
+                              );
+                            },
+                            child: const Text(
+                              "Edit Phone Number",
+                            ))
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
