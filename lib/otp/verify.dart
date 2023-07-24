@@ -130,11 +130,7 @@ class _MyVerifyState extends State<MyVerify> {
                 children: [
                   TextButton(
                       onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          'phone',
-                          (route) => false,
-                        );
+                        
                       },
                       child: Text(
                         "Edit Phone Number ?",
