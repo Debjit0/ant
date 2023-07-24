@@ -1,6 +1,8 @@
 import 'package:ant/theme/app_theme.dart';
+import 'package:ant/view_models/auth_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../otp/verify.dart';
 import '../widget/widgets.dart';
@@ -59,11 +61,11 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Container(
                 //  height: 300,
                 width: width,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text.rich(
                       textAlign: TextAlign.center,
@@ -168,6 +170,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               if (_formKey.currentState!.validate()) {
                                 print("${countryCode + phoneController.text}");
                                 try {
+                                  Provider.of<AuthProvider>(context,
+                                              listen: false)
+                                          .setPhoneNumber =
+                                      "${countryCode + phoneController.text}";
                                   await FirebaseAuth.instance.verifyPhoneNumber(
                                     phoneNumber:
                                         "${countryCode + phoneController.text}",

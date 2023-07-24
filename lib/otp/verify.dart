@@ -130,14 +130,26 @@ class _MyVerifyState extends State<MyVerify> {
                             try {
                               PhoneAuthCredential credential =
                                   PhoneAuthProvider.credential(
-                                      verificationId: MyPhone.verify,
+                                      verificationId: LoginScreen.verify,
                                       smsCode: code);
 
                               // Sign the user in (or link) with the credential
                               await auth.signInWithCredential(credential);
                               nextPageOnly(
                                   context: context, page: HomeScreen());
-                            } catch (e) {}
+                            } catch (e) {
+                              print('verify error');
+                              print(e);
+                              ScaffoldMessenger.of(context)
+                                  .hideCurrentSnackBar();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Center(
+                                    child: Text(e.toString()),
+                                  ),
+                                ),
+                              );
+                            }
                           },
                           child: const Text("Verify Phone Number")),
                     ),
