@@ -14,6 +14,7 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _firstNameController = TextEditingController();
 
   TextEditingController _lastNameController = TextEditingController();
@@ -41,126 +42,132 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
     var _authProvider = Provider.of<AuthProvider>(context);
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          SizedBox(
-            height: height,
-            width: width,
-          ),
-          SizedBox(
-            height: height * .7,
-            width: width,
-            child: Image.asset(
-              'assets/images/background.jpg',
-              fit: BoxFit.fitWidth,
-            ),
-          ),
-          Container(
-            height: height * .7,
-            width: width,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [
-                    Colors.black38,
-                    Colors.black87.withOpacity(1),
-                  ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  stops: const [0, 1],
-                  tileMode: TileMode.clamp),
-            ),
-          ),
-          Positioned(
-            bottom: height * .1,
-            child: Container(
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        body: Stack(
+          children: [
+            SizedBox(
+              height: height,
               width: width,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text.rich(
-                    textAlign: TextAlign.center,
-                    TextSpan(
-                      text: 'Register'.toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.w400,
-                        letterSpacing: 2,
-                        color: Theme.of(context).colorScheme.secondaryContainer,
+            ),
+            SizedBox(
+              height: height * .7,
+              width: width,
+              child: Image.asset(
+                'assets/images/background.jpg',
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+            Container(
+              height: height * .7,
+              width: width,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [
+                      Colors.black38,
+                      Colors.black87.withOpacity(1),
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    stops: const [0, 1],
+                    tileMode: TileMode.clamp),
+              ),
+            ),
+            Positioned(
+              bottom: height * .1,
+              child: Container(
+                width: width,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text.rich(
+                      textAlign: TextAlign.center,
+                      TextSpan(
+                        text: 'Register'.toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.w400,
+                          letterSpacing: 2,
+                          color:
+                              Theme.of(context).colorScheme.secondaryContainer,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 56,
-                  ),
-                  // Image.asset("assets/images/login.png"),
-                  Form(
-                    key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    const SizedBox(
+                      height: 56,
+                    ),
+                    // Image.asset("assets/images/login.png"),
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TextFormFieldWidget(
+                            hintText: 'Enter your first name',
+                            controller: _firstNameController,
+                          ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          TextFormFieldWidget(
+                            hintText: 'Enter your last name',
+                            controller: _lastNameController,
+                          ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          TextFormFieldWidget(
+                            hintText: 'Enter your email',
+                            controller: _emailController,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        TextFormFieldWidget(
-                          hintText: 'Enter your first name',
-                          controller: _firstNameController,
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        TextFormFieldWidget(
-                          hintText: 'Enter your last name',
-                          controller: _lastNameController,
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        TextFormFieldWidget(
-                          hintText: 'Enter your email',
-                          controller: _emailController,
+                        SizedBox(
+                          height: 50,
+                          child: FilledButton.tonal(
+                            onPressed: () async {
+                              _authProvider.setFirstName =
+                                  _firstNameController.text;
+                              _authProvider.setLastName =
+                                  _lastNameController.text;
+                              _authProvider.setEmail = _emailController.text;
+                            },
+                            child: const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("Next"),
+                                Icon(
+                                  Icons.keyboard_arrow_right_rounded,
+                                )
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      SizedBox(
-                        height: 50,
-                        child: FilledButton.tonal(
-                          onPressed: () async {
-                            _authProvider.setFirstName =
-                                _firstNameController.text;
-                            _authProvider.setLastName =
-                                _lastNameController.text;
-                            _authProvider.setEmail = _emailController.text;
-                          },
-                          child: const Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("Next"),
-                              Icon(
-                                Icons.keyboard_arrow_right_rounded,
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

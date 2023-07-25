@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: cYellow),
           useMaterial3: true,
         ),
-        home: Aadhar(),
+        home: SignupScreen(),
       ),
     );
   }

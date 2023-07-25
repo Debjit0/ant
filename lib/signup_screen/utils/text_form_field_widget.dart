@@ -9,10 +9,14 @@ class TextFormFieldWidget extends StatelessWidget {
 
   TextEditingController controller = TextEditingController();
   String hintText;
-  
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      style: const TextStyle(
+        color: Colors.white70,
+        fontSize: 14,
+      ),
       controller: controller,
       textAlign: TextAlign.center,
       decoration: InputDecoration(
