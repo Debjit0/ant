@@ -41,12 +41,12 @@ class UploadAadharProvider extends ChangeNotifier {
       //front
       await _storage
           .ref()
-          .child("$uid/Wallpaper/$aadharFrontName")
+          .child("$uid/aadhar/$aadharFrontName")
           .putFile(aadharFront)
           .whenComplete(() async {
         await _storage
             .ref()
-            .child("$uid/Wallpaper/$aadharFrontName")
+            .child("$uid/aadhar/$aadharFrontName")
             .getDownloadURL()
             .then((value) {
           aadharFrontPath = value;
@@ -65,14 +65,14 @@ class UploadAadharProvider extends ChangeNotifier {
             .then((value) {
           aadharBackPath = value;
         });
-        
+
         final data = {
-          'firstname':firstName,
-          'lastname':lastName,
-          'email':email,
+          'firstname': firstName,
+          'lastname': lastName,
+          'email': email,
           'uid': uid,
-          'aadharfront':aadharFrontPath ,
-          'aadharback' : aadharBackPath,
+          'aadharfront': aadharFrontPath,
+          'aadharback': aadharBackPath,
         };
 
         await userCollection.doc(uid).set(data);
