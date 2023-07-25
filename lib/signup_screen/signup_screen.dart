@@ -149,6 +149,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               _authProvider.setLastName =
                                   _lastNameController.text;
                               _authProvider.setEmail = _emailController.text;
+                              nextPage(context: context, page: const Aadhar());
                             },
                             child: const Row(
                               mainAxisSize: MainAxisSize.min,
