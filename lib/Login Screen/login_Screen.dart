@@ -184,6 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     codeSent: (String verificationId,
                                         int? resendToken) {
                                       LoginScreen.verify = verificationId;
+                                      
                                       nextPage(
                                           context: context, page: MyVerify());
                                     },

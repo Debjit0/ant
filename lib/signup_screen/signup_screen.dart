@@ -1,4 +1,6 @@
+import 'package:ant/signup_screen/aadhar.dart';
 import 'package:ant/view_models/auth_provider.dart';
+import 'package:ant/widget/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

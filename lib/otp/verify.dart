@@ -1,6 +1,8 @@
 import 'package:ant/Login%20Screen/login_Screen.dart';
 import 'package:ant/Login%20Screen/phone.dart';
 import 'package:ant/screens/home_screen/home_screen.dart';
+import 'package:ant/signup_screen/aadhar.dart';
+import 'package:ant/signup_screen/signup_screen.dart';
 import 'package:ant/widget/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -136,7 +138,7 @@ class _MyVerifyState extends State<MyVerify> {
                               // Sign the user in (or link) with the credential
                               await auth.signInWithCredential(credential);
                               nextPageOnly(
-                                  context: context, page: HomeScreen());
+                                  context: context, page: SignupScreen());
                             } catch (e) {
                               print('verify error');
                               print(e);
