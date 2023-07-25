@@ -6,7 +6,7 @@ class AuthProvider with ChangeNotifier {
   String _email = '';
   String _phoneNumber = '';
 
-  get firstName => _firstName = '';
+  get firstName => _firstName;
   get lastName => _lastName;
   get email => _email;
   get phoneNumber => _phoneNumber;
