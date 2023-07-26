@@ -1,15 +1,17 @@
 import 'package:ant/Login%20Screen/login_Screen.dart';
 import 'package:ant/Login%20Screen/phone.dart';
+import 'package:ant/Splash%20Screen/splash.dart';
+import 'package:ant/check_verified/checkVerified.dart';
 import 'package:ant/screens/home_screen/home_screen.dart';
 import 'package:ant/services/helper_functions.dart';
-import 'package:ant/signup_screen/aadhar.dart';
-import 'package:ant/signup_screen/signup_screen.dart';
+import 'package:ant/Signup%20Screen/aadhar.dart';
+import 'package:ant/Signup%20Screen/signup_screen.dart';
 import 'package:ant/theme/constants/project_colors.dart';
 import 'package:ant/view_models/auth_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: cYellow),
           useMaterial3: true,
         ),
-        home: LoginScreen(),
+        home: SplashScreen()
       ),
     );
   }

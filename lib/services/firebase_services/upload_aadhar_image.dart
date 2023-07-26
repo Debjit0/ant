@@ -67,6 +67,7 @@ class UploadAadharProvider extends ChangeNotifier {
         });
 
         final data = {
+          'isverified': false,
           'firstname': firstName,
           'lastname': lastName,
           'email': email,
