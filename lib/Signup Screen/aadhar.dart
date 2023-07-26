@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:ant/services/firebase_services/upload_aadhar_image.dart';
-import 'package:ant/signup_screen/utils/pick_image.dart';
+import 'package:ant/Signup%20Screen/utils/pick_image.dart';
 import 'package:ant/view_models/auth_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
