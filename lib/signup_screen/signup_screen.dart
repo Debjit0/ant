@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'utils/export.dart';
 
@@ -144,6 +145,10 @@ class _SignupScreenState extends State<SignupScreen> {
                           height: 50,
                           child: FilledButton.tonal(
                             onPressed: () async {
+                              SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              await prefs.setString(
+                                  'firstName', _firstNameController.text);
                               _authProvider.setFirstName =
                                   _firstNameController.text;
                               _authProvider.setLastName =

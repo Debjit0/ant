@@ -22,6 +22,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    String? firstName =
+        Provider.of<AuthProvider>(context, listen: false).firstName;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -67,34 +69,61 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text.rich(
-                      textAlign: TextAlign.center,
-                      TextSpan(
-                        text: 'Welcome back, '.toUpperCase(),
-                        style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: 2,
-                          color:
-                              Theme.of(context).colorScheme.secondaryContainer,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: 'Debjit'.toUpperCase(),
-                            style: TextStyle(
-                              fontSize: 32,
-                              letterSpacing: 2,
-                              fontWeight: FontWeight.w900,
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .secondaryContainer,
+                    firstName == null || firstName == ''
+                        ? Text.rich(
+                            TextSpan(
+                                text: 'Hey!\n'.toUpperCase(),
+                                style: TextStyle(
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.w900,
+                                  letterSpacing: 2,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .secondaryContainer,
+                                ),
+                                children: [
+                                  TextSpan(
+                                    text: 'nice to meet you'.toUpperCase(),
+                                    style: TextStyle(
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.w400,
+                                      letterSpacing: 2,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondaryContainer,
+                                    ),
+                                  ),
+                                ]),
+                          )
+                        : Text.rich(
+                            textAlign: TextAlign.center,
+                            TextSpan(
+                              text: 'Welcome back, '.toUpperCase(),
+                              style: TextStyle(
+                                fontSize: 32,
+                                fontWeight: FontWeight.w400,
+                                letterSpacing: 2,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .secondaryContainer,
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: 'Debjit'.toUpperCase(),
+                                  style: TextStyle(
+                                    fontSize: 32,
+                                    letterSpacing: 2,
+                                    fontWeight: FontWeight.w900,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondaryContainer,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                    ),
                     const SizedBox(
-                      height: 16,
+                      height: 56,
                     ),
                     // Image.asset("assets/images/login.png"),
                     Form(
@@ -184,7 +213,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     codeSent: (String verificationId,
                                         int? resendToken) {
                                       LoginScreen.verify = verificationId;
-                                      
+
                                       nextPage(
                                           context: context, page: MyVerify());
                                     },
