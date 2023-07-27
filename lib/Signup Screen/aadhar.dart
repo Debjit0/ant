@@ -22,10 +22,10 @@ class _AadharState extends State<Aadhar> {
 
   @override
   Widget build(BuildContext context) {
-    var _authProvider = Provider.of<AuthProvider>(context);
-    print(_authProvider.firstName);
-    print(_authProvider.lastName);
-    print(_authProvider.email);
+    var authProvider = Provider.of<AuthProvider>(context);
+    print(authProvider.firstName);
+    print(authProvider.lastName);
+    print(authProvider.email);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -65,7 +65,7 @@ class _AadharState extends State<Aadhar> {
                         ]),
                       )
                     : Center(
-                        child: Container(
+                        child: SizedBox(
                             height: 300,
                             width: 300,
                             child: Image.file(File(aadharFront))),
@@ -92,7 +92,7 @@ class _AadharState extends State<Aadhar> {
                         ]),
                       )
                     : Center(
-                        child: Container(
+                        child: SizedBox(
                             height: 300,
                             width: 300,
                             child: Image.file(File(aadharBack))),
@@ -109,10 +109,10 @@ class _AadharState extends State<Aadhar> {
                               uid: uid,
                               aadharFront: File(aadharFront),
                               aadharBack: File(aadharBack),
-                              firstName: _authProvider.firstName,
-                              lastName: _authProvider.lastName,
-                              email: _authProvider.email);
-                          nextPageOnly(context: context, page: CheckVerify());
+                              firstName: authProvider.firstName,
+                              lastName: authProvider.lastName,
+                              email: authProvider.email);
+                          nextPageOnly(context: context, page: const CheckVerify());
                         },
                         child: const Row(
                           mainAxisSize: MainAxisSize.min,

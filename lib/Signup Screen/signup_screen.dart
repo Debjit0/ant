@@ -17,12 +17,12 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TextEditingController _firstNameController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _firstNameController = TextEditingController();
 
-  TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
 
-  TextEditingController _emailController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -46,7 +46,7 @@ class _SignupScreenState extends State<SignupScreen> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-    var _authProvider = Provider.of<AuthProvider>(context);
+    var authProvider = Provider.of<AuthProvider>(context);
 
     return GestureDetector(
       onTap: () {
@@ -149,11 +149,11 @@ class _SignupScreenState extends State<SignupScreen> {
                                   await SharedPreferences.getInstance();
                               await prefs.setString(
                                   'firstName', _firstNameController.text);
-                              _authProvider.setFirstName =
+                              authProvider.setFirstName =
                                   _firstNameController.text;
-                              _authProvider.setLastName =
+                              authProvider.setLastName =
                                   _lastNameController.text;
-                              _authProvider.setEmail = _emailController.text;
+                              authProvider.setEmail = _emailController.text;
                               nextPage(context: context, page: const Aadhar());
                             },
                             child: const Row(

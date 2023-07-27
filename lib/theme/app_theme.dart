@@ -12,15 +12,15 @@ class AppTheme {
   static const double buttonFontSizeSmall = 12;
   static const buttonFontWeight = FontWeight.w400;
 
-  static var largeButtonTextStyle = TextStyle(
+  static var largeButtonTextStyle = const TextStyle(
     fontFamily: buttonTextFamily,
     fontSize: buttonFontSizeLarge,
   );
-  static var mediumButtonTextStyle = TextStyle(
+  static var mediumButtonTextStyle = const TextStyle(
     fontFamily: buttonTextFamily,
     fontSize: buttonFontSizeMedium,
   );
-  static var smallButtonTextStyle = TextStyle(
+  static var smallButtonTextStyle = const TextStyle(
     fontFamily: buttonTextFamily,
     fontSize: buttonFontSizeSmall,
   );

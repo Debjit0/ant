@@ -1,4 +1,3 @@
-import 'package:ant/theme/app_theme.dart';
 import 'package:ant/view_models/auth_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +16,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   String countryCode = '+91';
   TextEditingController phoneController = TextEditingController();
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -61,7 +60,6 @@ class _LoginScreenState extends State<LoginScreen> {
             Positioned(
               bottom: height * .1,
               child: Container(
-                //  height: 300,
                 width: width,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
@@ -125,7 +123,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(
                       height: 56,
                     ),
-                    // Image.asset("assets/images/login.png"),
                     Form(
                       key: _formKey,
                       child: SizedBox(
@@ -160,6 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       value.length > 15) {
                                     return 'PLease enter a valid phone number';
                                   }
+                                  return null;
                                 },
                                 keyboardType: TextInputType.number,
                                 textAlign: TextAlign.center,
@@ -168,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       vertical: 16, horizontal: 16),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(100),
-                                    borderSide: BorderSide(),
+                                    borderSide: const BorderSide(),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(100),
@@ -197,15 +195,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: FilledButton.tonal(
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                print("${countryCode + phoneController.text}");
                                 try {
                                   Provider.of<AuthProvider>(context,
                                               listen: false)
                                           .setPhoneNumber =
-                                      "${countryCode + phoneController.text}";
+                                      countryCode + phoneController.text;
                                   await FirebaseAuth.instance.verifyPhoneNumber(
                                     phoneNumber:
-                                        "${countryCode + phoneController.text}",
+                                        countryCode + phoneController.text,
                                     verificationCompleted:
                                         (PhoneAuthCredential credential) {},
                                     verificationFailed:
@@ -215,13 +212,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                       LoginScreen.verify = verificationId;
 
                                       nextPage(
-                                          context: context, page: MyVerify());
+                                          context: context,
+                                          page: const MyVerify());
                                     },
                                     codeAutoRetrievalTimeout:
                                         (String verificationId) {},
                                   );
                                 } catch (e) {
-                                  print(e);
                                   ScaffoldMessenger.of(context)
                                       .hideCurrentSnackBar();
                                   ScaffoldMessenger.of(context).showSnackBar(
