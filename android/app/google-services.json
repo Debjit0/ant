@@ -47,10 +47,82 @@
               "client_type": 3
             },
             {
-              "client_id": "822716013306-k6ui08dv3gf6dhkek734uc3s4tc8h5u5.apps.googleusercontent.com",
+              "client_id": "822716013306-91hllqibjqk5dd82t6cmajse5038dk1s.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.ant.RunnerTests"
+                "bundle_id": "com.example.antManager.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822716013306:android:8f279980e8b02eef5d4743",
+        "android_client_info": {
+          "package_name": "com.example.ant_influncer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "822716013306-khnuitdeu0ubt84nf61t2enflg59b0jk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhzq5fGs8Sb_MRHjLiFi916u-lynzmg4M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "822716013306-khnuitdeu0ubt84nf61t2enflg59b0jk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "822716013306-91hllqibjqk5dd82t6cmajse5038dk1s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.antManager.RunnerTests"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822716013306:android:d9c0f8c54c5f83ce5d4743",
+        "android_client_info": {
+          "package_name": "com.example.ant_manager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "822716013306-khnuitdeu0ubt84nf61t2enflg59b0jk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhzq5fGs8Sb_MRHjLiFi916u-lynzmg4M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "822716013306-khnuitdeu0ubt84nf61t2enflg59b0jk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "822716013306-91hllqibjqk5dd82t6cmajse5038dk1s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.antManager.RunnerTests"
               }
             }
           ]

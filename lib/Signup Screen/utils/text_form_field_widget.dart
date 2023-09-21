@@ -29,6 +29,6 @@ class TextFormFieldWidget extends StatelessWidget {
           color: Colors.white70,
         ),
       ),
-    );
+    ); 
   }
 }
