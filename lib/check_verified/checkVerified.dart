@@ -1,7 +1,10 @@
 import 'package:ant/Login%20Screen/login_Screen.dart';
-import 'package:ant/widget/widgets.dart';
+import 'package:ant/screens/home_screen/home_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 
 class CheckVerify extends StatefulWidget {
   const CheckVerify({super.key});
@@ -11,76 +14,65 @@ class CheckVerify extends StatefulWidget {
 }
 
 class _CheckVerifyState extends State<CheckVerify> {
+  bool conditions = false;
+  bool isVerified = false;
+  String accounttype = "";
+
+  void initState() {
+    // TODO: implement initState
+    //super.initState();
+
+    getVerificationStatus().then((value) => setState(
+          () {},
+        ));
+
+    super.initState();
+    //getVerificationStatus();
+  }
+
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-    return Scaffold(
-        body: Stack(
-      children: [
-        SizedBox(
-          height: height,
-          width: width,
-        ),
-        SizedBox(
-          height: height * .7,
-          width: width,
-          child: Image.asset(
-            'assets/images/background.jpg',
-            fit: BoxFit.fitWidth,
-          ),
-        ),
-        Container(
-          height: height * .7,
-          width: width,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors: [
-                  Colors.black38,
-                  Colors.black87.withOpacity(1),
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                stops: const [0, 1],
-                tileMode: TileMode.clamp),
-          ),
-        ),
-        Positioned(
-          bottom: height * .1,
-          child: SizedBox(
-            width: width - 32,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Wait until u get verified".toUpperCase(),
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.secondaryContainer,
-                    fontSize: 32,
-                  ),
-                ),
-                const SizedBox(height: 56),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    FilledButton.tonal(
+    return conditions == false
+        ? Scaffold(
+            body: SafeArea(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
                       onPressed: () {
-                        FirebaseAuth.instance.signOut();
-                        nextPageOnly(
-                            context: context, page: const LoginScreen());
+                        FirebaseAuth.instance
+                            .signOut()
+                            .whenComplete(() => Get.offAll(LoginScreen()));
                       },
-                      child: Text(
-                        "Logout".toUpperCase(),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                      child: Text("Logout")),
+                  ElevatedButton(
+                      onPressed: () {
+                        getVerificationStatus().then((value) => setState(
+                              () {},
+                            ));
+                      },
+                      child: Text("Refresh")),
+                ],
+              ),
             ),
-          ),
-        ),
-      ],
-    ));
+          ))
+        : HomeScreen();
+  }
+
+  Future<bool> getVerificationStatus() async {
+    DocumentSnapshot document = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    isVerified = document['isverified'];
+    accounttype = document["accounttype"];
+    if (isVerified == true && accounttype == "closer") {
+      conditions = true;
+      return true;
+    } else {
+      conditions = false;
+      return false;
+    }
   }
 }

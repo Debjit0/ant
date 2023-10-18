@@ -1,13 +1,13 @@
-import 'package:ant/Login%20Screen/login_Screen.dart';
-import 'package:ant/check_verified/checkVerified.dart';
-import 'package:ant/screens/home_screen/home_screen.dart';
+
 import 'package:ant/Signup%20Screen/signup_screen.dart';
 import 'package:ant/widget/widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import '../Login Screen/login_screen.dart';
+
 
 class MyVerify extends StatefulWidget {
   const MyVerify({Key? key}) : super(key: key);
@@ -19,50 +19,29 @@ class MyVerify extends StatefulWidget {
 class _MyVerifyState extends State<MyVerify> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   var code = "";
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-  bool isReg = true;
-  bool isVerified = false;
-  checkUserReg() async {
-    var resp = await firestore.collection('Users').get();
-    final allUsers = resp.docs.map((doc) => doc.data()).toList();
-
-    int idx = allUsers
-        .indexWhere((e) => e['uid'] == FirebaseAuth.instance.currentUser!.uid);
-    if (idx != -1) {
-      isReg = true;
-    } else {
-      isReg = false;
-    }
-    isVerified = allUsers[idx]['isverified'];
-    if (isVerified == true) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setBool('isVerified', true);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final defaultPinTheme = PinTheme(
       width: 56,
       height: 56,
-      textStyle: const TextStyle(
+      textStyle: TextStyle(
           fontSize: 20,
           color: Color.fromRGBO(30, 60, 87, 1),
           fontWeight: FontWeight.w600),
       decoration: BoxDecoration(
-        border: Border.all(color: const Color.fromRGBO(234, 239, 243, 1)),
+        border: Border.all(color: Color.fromRGBO(234, 239, 243, 1)),
         borderRadius: BorderRadius.circular(20),
       ),
     );
 
     final focusedPinTheme = defaultPinTheme.copyDecorationWith(
-      border: Border.all(color: const Color.fromRGBO(114, 178, 238, 1)),
+      border: Border.all(color: Color.fromRGBO(114, 178, 238, 1)),
       borderRadius: BorderRadius.circular(8),
     );
 
     final submittedPinTheme = defaultPinTheme.copyWith(
       decoration: defaultPinTheme.decoration?.copyWith(
-        color: const Color.fromRGBO(234, 239, 243, 1),
+        color: Color.fromRGBO(234, 239, 243, 1),
       ),
     );
     double height = MediaQuery.of(context).size.height;
@@ -131,6 +110,9 @@ class _MyVerifyState extends State<MyVerify> {
                     ),
                     Pinput(
                       length: 6,
+                      // defaultPinTheme: defaultPinTheme,
+                      // focusedPinTheme: focusedPinTheme,
+                      // submittedPinTheme: submittedPinTheme,
                       onChanged: (value) {
                         code = value;
                       },
@@ -156,22 +138,9 @@ class _MyVerifyState extends State<MyVerify> {
 
                               // Sign the user in (or link) with the credential
                               await auth.signInWithCredential(credential);
-                              await checkUserReg();
-
-                              isReg
-                                  ? isVerified
-                                      ? nextPageOnly(
-                                          context: context,
-                                          page: const HomeScreen(),
-                                        )
-                                      : nextPageOnly(
-                                          context: context,
-                                          page: CheckVerify(),
-                                        )
-                                  : nextPageOnly(
-                                      context: context,
-                                      page: const SignupScreen());
-                            } catch (e) {
+                              nextPageOnly(
+                                  context: context, page: SignupScreen());
+                            }catch (e) {
                               print('verify error');
                               print(e);
                               ScaffoldMessenger.of(context)
@@ -190,18 +159,17 @@ class _MyVerifyState extends State<MyVerify> {
                     Row(
                       children: [
                         TextButton(
-                          onPressed: () {
-                            nextPageOnly(
-                              context: context,
-                              page: const LoginScreen(),
-                            );
-                          },
-                          child: const Text(
-                            "Edit Phone Number",
-                          ),
-                        ),
+                            onPressed: () {
+                              nextPageOnly(
+                                context: context,
+                                page: const LoginScreen(),
+                              );
+                            },
+                            child: const Text(
+                              "Edit Phone Number",
+                            ))
                       ],
-                    ),
+                    )
                   ],
                 ),
               ),

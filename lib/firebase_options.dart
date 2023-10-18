@@ -55,7 +55,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDhzq5fGs8Sb_MRHjLiFi916u-lynzmg4M',
-    appId: '1:822716013306:android:7b351764600d17d85d4743',
+    appId: '1:822716013306:android:c1c294ebbf603a755d4743',
     messagingSenderId: '822716013306',
     projectId: 'antamit-e2b26',
     storageBucket: 'antamit-e2b26.appspot.com',
@@ -63,7 +63,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCdNxOdVApIYhhaSOwpmQ3duvODiH3wjos',
-    appId: '1:822716013306:ios:23eccf79cdb481ee5d4743',
+    appId: '1:822716013306:ios:5e285f13af9662625d4743',
     messagingSenderId: '822716013306',
     projectId: 'antamit-e2b26',
     storageBucket: 'antamit-e2b26.appspot.com',
@@ -74,7 +74,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyCdNxOdVApIYhhaSOwpmQ3duvODiH3wjos',
-    appId: '1:822716013306:ios:f37c3cd72b022b695d4743',
+    appId: '1:822716013306:ios:0d8937e28373ddae5d4743',
     messagingSenderId: '822716013306',
     projectId: 'antamit-e2b26',
     storageBucket: 'antamit-e2b26.appspot.com',

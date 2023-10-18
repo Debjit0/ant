@@ -1,10 +1,10 @@
-import 'package:ant/view_models/auth_provider.dart';
+
+import 'package:ant/widget/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../otp/verify.dart';
-import '../widget/widgets.dart';
+import '../view_models/auth_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,13 +16,11 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   String countryCode = '+91';
   TextEditingController phoneController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    String? firstName =
-        Provider.of<AuthProvider>(context, listen: false).firstName;
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -60,6 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Positioned(
               bottom: height * .1,
               child: Container(
+                //  height: 300,
                 width: width,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
@@ -67,62 +66,36 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    firstName == null || firstName == ''
-                        ? Text.rich(
-                            TextSpan(
-                                text: 'Hey!\n'.toUpperCase(),
-                                style: TextStyle(
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.w900,
-                                  letterSpacing: 2,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .secondaryContainer,
-                                ),
-                                children: [
-                                  TextSpan(
-                                    text: 'nice to meet you'.toUpperCase(),
-                                    style: TextStyle(
-                                      fontSize: 32,
-                                      fontWeight: FontWeight.w400,
-                                      letterSpacing: 2,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondaryContainer,
-                                    ),
-                                  ),
-                                ]),
-                          )
-                        : Text.rich(
-                            textAlign: TextAlign.center,
-                            TextSpan(
-                              text: 'Welcome back, '.toUpperCase(),
-                              style: TextStyle(
-                                fontSize: 32,
-                                fontWeight: FontWeight.w400,
-                                letterSpacing: 2,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .secondaryContainer,
-                              ),
-                              children: [
-                                TextSpan(
-                                  text: 'Debjit'.toUpperCase(),
-                                  style: TextStyle(
-                                    fontSize: 32,
-                                    letterSpacing: 2,
-                                    fontWeight: FontWeight.w900,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .secondaryContainer,
-                                  ),
-                                ),
-                              ],
+                    Text.rich(
+                      textAlign: TextAlign.center,
+                      TextSpan(
+                        text: 'Welcome back, '.toUpperCase(),
+                        style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.w400,
+                          letterSpacing: 2,
+                          color:
+                              Theme.of(context).colorScheme.secondaryContainer,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: 'Bud'.toUpperCase(),
+                            style: TextStyle(
+                              fontSize: 32,
+                              letterSpacing: 2,
+                              fontWeight: FontWeight.w900,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .secondaryContainer,
                             ),
                           ),
-                    const SizedBox(
-                      height: 56,
+                        ],
+                      ),
                     ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    // Image.asset("assets/images/login.png"),
                     Form(
                       key: _formKey,
                       child: SizedBox(
@@ -157,7 +130,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                       value.length > 15) {
                                     return 'PLease enter a valid phone number';
                                   }
-                                  return null;
                                 },
                                 keyboardType: TextInputType.number,
                                 textAlign: TextAlign.center,
@@ -166,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       vertical: 16, horizontal: 16),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(100),
-                                    borderSide: const BorderSide(),
+                                    borderSide: BorderSide(),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(100),
@@ -195,14 +167,15 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: FilledButton.tonal(
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
+                                print("${countryCode + phoneController.text}");
                                 try {
                                   Provider.of<AuthProvider>(context,
                                               listen: false)
                                           .setPhoneNumber =
-                                      countryCode + phoneController.text;
+                                      "${countryCode + phoneController.text}";
                                   await FirebaseAuth.instance.verifyPhoneNumber(
                                     phoneNumber:
-                                        countryCode + phoneController.text,
+                                        "${countryCode + phoneController.text}",
                                     verificationCompleted:
                                         (PhoneAuthCredential credential) {},
                                     verificationFailed:
@@ -210,15 +183,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                     codeSent: (String verificationId,
                                         int? resendToken) {
                                       LoginScreen.verify = verificationId;
-
+                                      
                                       nextPage(
-                                          context: context,
-                                          page: const MyVerify());
+                                          context: context, page: MyVerify());
                                     },
                                     codeAutoRetrievalTimeout:
                                         (String verificationId) {},
                                   );
                                 } catch (e) {
+                                  print(e);
                                   ScaffoldMessenger.of(context)
                                       .hideCurrentSnackBar();
                                   ScaffoldMessenger.of(context).showSnackBar(
