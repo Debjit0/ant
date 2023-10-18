@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -13,23 +14,24 @@ class HomeScreen extends StatelessWidget {
     var authProvider = Provider.of<AuthProvider>(context);
     var firstName = authProvider.firstName;
     CollectionReference unitCollection =
-      FirebaseFirestore.instance.collection('leads');
+        FirebaseFirestore.instance.collection('leads');
     return Scaffold(
       appBar: AppBar(title: Text("Dashboard")),
-      
       body: StreamBuilder(
-          stream: unitCollection.where('closer', isEqualTo: FirebaseAuth.instance.currentUser!.uid).snapshots(),
+          stream: unitCollection
+              .where('closer',
+                  isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+              .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
               return Text('Something went wrong');
             }
 
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator(),);
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             }
-
-            
-            
 
             return ListView.builder(
               itemCount: snapshot.data!.docs.length,
@@ -37,7 +39,9 @@ class HomeScreen extends StatelessWidget {
                 print(snapshot.data!.docs.length);
                 return GestureDetector(
                   onTap: () {},
-                  child: UnitTile(title: snapshot.data!.docs[index]['email'], subtitle: snapshot.data!.docs[index]['phone'].toString()),
+                  child: UnitTile(
+                      title: snapshot.data!.docs[index]['email'],
+                      subtitle: snapshot.data!.docs[index]['phone'].toString()),
                 );
               },
             );
@@ -50,14 +54,8 @@ class HomeScreen extends StatelessWidget {
         elevation: 0,
       ),
     );
-    
   }
-
-
-
-  
 }
-
 
 class UnitTile extends StatelessWidget {
   UnitTile({
@@ -75,30 +73,31 @@ class UnitTile extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 14, vertical: 7),
       padding: EdgeInsets.all(14),
       decoration: BoxDecoration(
-          color: Colors.amber,
-          borderRadius: BorderRadius.circular(20)),
+          color: Colors.white, borderRadius: BorderRadius.circular(20)),
       child: ListTile(
-        trailing: IconButton(onPressed: (){
-
-          
-
-        }, icon: Icon(Icons.call, color: Colors.green,)),
+        trailing: IconButton(
+            onPressed: () {
+              launchDialer(subtitle);
+            },
+            icon: Icon(
+              Icons.call,
+              color: Colors.green,
+            )),
         title: Text(
           title,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         subtitle: Text(subtitle),
-        
       ),
     );
   }
 
   launchDialer(String number) async {
-  String url = 'tel:' + number;
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Application unable to open dialer.';
+    final Uri url = Uri(scheme: 'tel', path: number);
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Application unable to open dialer.';
+    }
   }
-}
 }
