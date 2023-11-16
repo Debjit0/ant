@@ -70,7 +70,7 @@ class UploadAadharProvider extends ChangeNotifier {
         });
 
         final data = {
-          'isverified': false,
+          'isverified': true,
           'firstname': firstName,
           'lastname': lastName,
           'email': email,

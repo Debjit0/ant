@@ -48,6 +48,7 @@ class _CheckVerifyState extends State<CheckVerify> {
                       child: Text("Logout")),
                   ElevatedButton(
                       onPressed: () {
+                        print(FirebaseAuth.instance.currentUser!.uid);
                         getVerificationStatus().then((value) => setState(
                               () {},
                             ));
